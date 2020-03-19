@@ -1,0 +1,23 @@
+{
+  "name": "pixiccw",
+  "version": "1.0.0",
+  "description": "A PixiJS Payment Card visualizer",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dappjumper/pixiccw.git"
+  },
+  "author": "Tobias Andersen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dappjumper/pixiccw/issues"
+  },
+  "homepage": "https://github.com/dappjumper/pixiccw#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

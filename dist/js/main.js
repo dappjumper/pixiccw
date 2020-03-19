@@ -65,6 +65,10 @@ class Card {
 		//Resize the canvas to fit container
 		this.canvas.setAttribute('width',(this.container.width)+'px')
 		this.canvas.setAttribute('height',(this.container.height)+'px')
+		this.container.pivot.x = this.canvas.width/2
+		this.container.position.x = this.canvas.width/2
+		this.container.pivot.y = this.canvas.height/2
+		this.container.position.y = this.canvas.height/2
 	}
 	animateIn(d) {
 		if(this.container.alpha < 1) {
@@ -124,10 +128,11 @@ class Mastercard extends Card {
 		name: "Your name here"
 	})
 	document.querySelector("#nameinput").addEventListener("keyup", event => {
-	  	demoMastercard.changeName(event.target.value)
+	  	demoMastercard.changeName(event.target.value.toUpperCase())
 	});
+	VanillaTilt.init(DOMElement.querySelector('canvas'), {reverse:true, scale: 1.2, speed: 1000, max:10})
 	document.querySelector("#nameinput").addEventListener("keydown", event => {
-		demoMastercard.changeName(event.target.value)
+		demoMastercard.changeName(event.target.value.toUpperCase())
 	});
 
 })();

@@ -1,5 +1,7 @@
 # PixiJS whitelabeled Credit Card visualizer
 
+Demo: http://pixiccw.herokuapp.com/
+
 Note: Duplicate assets/generic to assets/whitelabel to overwrite assets
 
 Using NodeJS to act as de-facto server for Cross Origin Resource Sharing (CORS) reasons

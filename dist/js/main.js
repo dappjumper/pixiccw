@@ -130,7 +130,15 @@ class Mastercard extends Card {
 	document.querySelector("#nameinput").addEventListener("keyup", event => {
 	  	demoMastercard.changeName(event.target.value.toUpperCase())
 	});
-	VanillaTilt.init(DOMElement.querySelector('canvas'), {reverse:true, scale: 1.2, speed: 1000, max:10})
+	VanillaTilt.init(DOMElement.querySelector('canvas'), {
+		reverse:true, 
+		scale: 1.2, 
+		speed: 1000, 
+		max:10,
+		glare: true,
+		"max-glare": 100
+	})
+
 	document.querySelector("#nameinput").addEventListener("keydown", event => {
 		demoMastercard.changeName(event.target.value.toUpperCase())
 	});

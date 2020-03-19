@@ -24,10 +24,37 @@
 				padding:16px 32px;
 				border-radius:16px;
 				outline:none; border:none;
-				position:fixed;
+				position:absolute;
 				bottom:0%;
 				left:50%;
 				transform:translate(-50%,-64px);
+			}
+			#ccw, #nameinput, #ccw canvas {
+				transition: all .1s;
+			}
+			@media only screen and (max-height:500px) {
+				#nameinput {
+					bottom:32px;
+					transform:translate(-50%,0);
+				}
+				#ccw {
+					top:0px!important;
+					transform:translate(-50%,0)!important;
+				}
+			}
+			@media only screen and (max-width:441px) {
+				#ccw {
+					top:32px;
+					transform:translate(-50%,0);
+					width:100%;
+					padding:32px;
+					box-sizing:border-box;
+				}
+				
+				#ccw canvas {
+					width:100%;
+					height:auto;
+				}
 			}
 		</style>
 		<div id="ccw" data-width="377" data-height="238">
@@ -35,6 +62,26 @@
 		</div>
 		<input id="nameinput" placeholder="Your name here"/>
 		<script type="text/javascript" src="js/pixi.min.js"></script>
+		<script type="text/javascript">
+			/*
+			 * IE Polyfill for tilt.min.js
+			 */
+			(function () {
+
+			  if ( typeof window.CustomEvent === "function" ) return false;
+
+			  function CustomEvent ( event, params ) {
+			    params = params || { bubbles: false, cancelable: false, detail: null };
+			    var evt = document.createEvent( 'CustomEvent' );
+			    evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+			    return evt;
+			   }
+
+			  CustomEvent.prototype = window.Event.prototype;
+
+			  window.CustomEvent = CustomEvent;
+			})();
+		</script>
 		<script type="text/javascript" src="js/tilt.min.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>

@@ -1,10 +1,35 @@
+class FadingText {
+	constructor(x, y, string, fontsize, container) {
+		this.draw = new PIXI.Text(string,{fontFamily : 'Arial', fontSize: fontsize, fill : 0xffffff, align : 'left'});
+		container.addChild(this.draw)
+		this.draw.alpha = 0;
+		this.draw.position.x = x
+		this.draw.position.y = y
+		requestAnimationFrame(function(d){this.animateIn(d)}.bind(this))
+	}
+	animateIn(d) {
+		if(this.draw.alpha < 1) {
+			this.draw.alpha += 0.1 * d/1000;
+		} else {
+			return this.draw.alpha = 1;
+		}
+		requestAnimationFrame(function(d){this.animateIn(d)}.bind(this))
+	}
+}
 class Card {
 	constructor(app, canvas) {
 		if(this.visual) this.visual()
 		this.app = app;
 		this.canvas = canvas
 	}
-	addToScene(DOMElement) {
+	changeName(name) {
+		try {
+			this.name.draw.text = name;
+		} catch(e){
+			return e
+		}
+	}
+	addToScene(strings) {
 		let ready = true
 		if(this.container) {
 			if(this.container.width < 2) {
@@ -13,12 +38,18 @@ class Card {
 		} else {
 			ready = false
 		}
-		if(!ready) return setTimeout(function(){this.addToScene()}.bind(this), 100)
-		this.container.alpha = 0;
+		if(!ready) return setTimeout(function(){this.addToScene(strings)}.bind(this), 100)
 		this.app.stage.addChild(this.container)
-		console.log(this.canvas)
+		this.name = new FadingText(20*this.container.scale.x,this.background.height-(40*this.container.scale.y),strings.name || "Your name here", 17, this.container)
+		this.validValue = new FadingText(20*this.container.scale.x,this.background.height-(60*this.container.scale.y),strings.valid || "12/23", 17, this.container)
+		this.validLabel = new FadingText(22*this.container.scale.x,this.background.height-(68*this.container.scale.y),"VALID THRU", 6.5, this.container)
+		this.validLabel = new FadingText(22*this.container.scale.x,this.background.height-(93*this.container.scale.y),strings.cardnumber || "2221 0012 3412 3456", 20, this.container)
+		this.title = new FadingText(22*this.container.scale.x,20*this.container.scale.y,"Card Issuer", 20, this.container)
+
 		this.containThenTrim()
-		this.fadeIn()
+
+		this.container.alpha = 0;
+		requestAnimationFrame(function(d){this.animateIn(d)}.bind(this))
 	}
 	containThenTrim() {
 		//Get height and width ratio between container and app canvas
@@ -35,13 +66,13 @@ class Card {
 		this.canvas.setAttribute('width',(this.container.width)+'px')
 		this.canvas.setAttribute('height',(this.container.height)+'px')
 	}
-	fadeIn() {
+	animateIn(d) {
 		if(this.container.alpha < 1) {
-			this.container.alpha += 0.1;
+			this.container.alpha += 0.1 * d/1000;
 		} else {
 			return this.container.alpha = 1;
 		}
-		requestAnimationFrame(function(){this.fadeIn()}.bind(this))
+		requestAnimationFrame(function(d){this.animateIn(d)}.bind(this))
 	}
 }
 class Mastercard extends Card {
@@ -89,6 +120,14 @@ class Mastercard extends Card {
 	DOMElement.appendChild(app.view);
 
 	let demoMastercard = new Mastercard(app, DOMElement.querySelector('canvas'))
-	demoMastercard.addToScene()
+	demoMastercard.addToScene({
+		name: "Your name here"
+	})
+	document.querySelector("#nameinput").addEventListener("keyup", event => {
+	  	demoMastercard.changeName(event.target.value)
+	});
+	document.querySelector("#nameinput").addEventListener("keydown", event => {
+		demoMastercard.changeName(event.target.value)
+	});
 
 })();

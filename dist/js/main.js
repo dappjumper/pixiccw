@@ -115,7 +115,7 @@ class Mastercard extends Card {
 	    height: providedConfig.height || 600,
 	    
 	    //Don't change this unless you want a pixelated image
-	    resolution: window.devicePixelRatio || 1,
+	    resolution: 1,
 
 	    //Use #color if set in data attribute, otherwise use transparent = true
 	    [(providedConfig.background ? 'backgroundColor' : 'transparent')]: (providedConfig.background ? providedConfig.background.replace('#','0x') : true)

@@ -43,7 +43,7 @@ class Card {
 		this.name = new FadingText(20*this.container.scale.x,this.background.height-(40*this.container.scale.y),strings.name || "Your name here", 17, this.container)
 		this.validValue = new FadingText(20*this.container.scale.x,this.background.height-(60*this.container.scale.y),strings.valid || "12/23", 17, this.container)
 		this.validLabel = new FadingText(22*this.container.scale.x,this.background.height-(68*this.container.scale.y),"VALID THRU", 6.5, this.container)
-		this.validLabel = new FadingText(22*this.container.scale.x,this.background.height-(93*this.container.scale.y),strings.cardnumber || "2221 0012 3412 3456", 20, this.container)
+		this.cardNumber = new FadingText(22*this.container.scale.x,this.background.height-(93*this.container.scale.y),strings.cardnumber || "2221 0012 3412 3456", 20, this.container)
 		this.title = new FadingText(22*this.container.scale.x,20*this.container.scale.y,"Card Issuer", 20, this.container)
 
 		this.containThenTrim()
@@ -78,12 +78,36 @@ class Card {
 		}
 		requestAnimationFrame(function(d){this.animateIn(d)}.bind(this))
 	}
+	setTextAlpha(val) {
+		this.name.draw.alpha = val;
+		this.validLabel.draw.alpha = val;
+		this.validValue.draw.alpha = val;
+		this.cardNumber.draw.alpha = val;
+		this.title.draw.alpha = val;
+	}
 }
 class Mastercard extends Card {
 	visual() {
 		this.container = new PIXI.Container()
 		this.background = new PIXI.Sprite.from('assets/generic/mastercard.png')
+		this.backside = new PIXI.Sprite.from('assets/generic/mastercard_back.png')
+		this.container.addChild(this.backside)
 		this.container.addChild(this.background)
+		this.container.interactive = true
+		this.container.on('mouseup', function(){this.flip()}.bind(this))
+	}
+	flip() {
+		if(!this.isFlipped) {
+			this.isFlipped = true;
+			this.backside.alpha = 1;
+			this.background.alpha = 0;
+			this.setTextAlpha(0)
+		} else {
+			this.setTextAlpha(1)
+			this.isFlipped = false;
+			this.background.alpha = 1;
+			this.backside.alpha = 0;
+		}
 	}
 }
 

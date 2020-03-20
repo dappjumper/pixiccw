@@ -124,7 +124,11 @@ class Mastercard extends Card {
 	DOMElement.appendChild(app.view);
 
 	let demoMastercard = new Mastercard(app, DOMElement.querySelector('canvas'))
+	let fourRandom = ()=>{
+		return ''+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+""
+	}
 	demoMastercard.addToScene({
+		cardnumber: `${fourRandom()} ${fourRandom()} ${fourRandom()} ${fourRandom()}`,
 		name: "Your name here"
 	})
 	document.querySelector("#nameinput").addEventListener("keyup", event => {
